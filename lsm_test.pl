@@ -6,8 +6,6 @@ use POSIX;
 use warnings;
 use Getopt::Long;
 use LSM::Power;
-use LSM::Linear;
-use LSM::Logarithmic;
 use LSM::Exponential;
 
 my ($pow, $lin, $log, $exp, $all);
@@ -93,7 +91,7 @@ print STDOUT "Ind\tNR\tRE\tRP\tMed\tErrA\tErrR\n";
 for my $x ($start_point .. $final_point)
 {
     my ($e, $p) = (ceil($expon->evaluate($x)), ceil($power->evaluate($x)));
-    my $m = ceil(($e + $p)/2);
+    my $m = ceil(($e + 4 * $p)/5);
     my $t = $expon->{data}->{$x};
     $t = $t ? ceil(exp($t)) : "-";
     $t = 1 if $x < 5;
@@ -101,6 +99,3 @@ for my $x ($start_point .. $final_point)
     my $r = ($a ne "-") ? $a / $t * 100 : "-";
     print STDOUT "$x\t$t\t$e\t$p\t$m\t$a\t$r\n";
 }
-print $expon->get_func() . "\n";
-print $expon->r_square() . "\n";
-print $power->get_func() . "\n";

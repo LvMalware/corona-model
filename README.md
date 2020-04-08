@@ -1,7 +1,5 @@
-# LSM
+# Corona Model
 
-A simple statistics module, which provides 4 basic types of regressions using the Least Squares Method (LSM)
+A statistical aproach for modeling the number of cases of the Corona Virus in Brazil.
 
-The file `lsm_test.pl` provides an unified interface for their use as a command line tool.
-
-NOTE: This module is still in the early stages of development, so efficiency and accuracy are not guaranteed.
+NOTE: This model is still in the early stages of development, so efficiency and accuracy may not be guaranteed. In addition, as the prevention measures adopted by the population come into effect, reducing the growth in the number of cases, this model will tend to become less accurate over time.

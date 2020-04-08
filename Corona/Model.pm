@@ -6,6 +6,8 @@ use String::Scanf;
 use base 'Exporter';
 use List::Util qw(sum);
 
+our $VERSION = 0.3.2;
+
 sub new
 {
     my ($self, %args) = @_;

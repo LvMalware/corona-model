@@ -25,7 +25,7 @@ sub estimate_days
     my $limit = $predictor->{last};
     if ($inc > $limit)
     {
-        die "Can't perform iterative prediction with IDAY > LIMIT ($limit)"
+        die "Can't perform iterative prediction with IDAY ($inc) > LIMIT ($limit)"
     }
     for my $day (1 .. $max_day)
     {

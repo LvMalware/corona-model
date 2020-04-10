@@ -15,7 +15,7 @@ sub estimate_days
     my %args = @_;
     my $filename = $args{filename};
     my $max_day  = $args{final} || die "No final day specified. Try passing 'final => day'";
-    my $inc      = $args{inc}   || 28;
+    my $inc      = $args{inc}   || 19;
     my $w_p      = $args{wp}    || 1;
     my $w_e      = $args{we}    || 1;
     die "Invalid file: '$filename'" unless (-f $filename);
@@ -53,7 +53,7 @@ sub estimate_days
             po_weight => $w_p,
             ex_weight => $w_e
         };
-        $w_p ++ if (($day >= $inc) && defined($rel_error) && (int($rel_error) <= 1));
+        $w_e ++ if (($day >= $inc) && defined($rel_error) && (int($rel_error) <= 1));
     }
     \%estimatives
 }

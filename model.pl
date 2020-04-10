@@ -21,8 +21,9 @@ Options:
     -v, --version           Display the version and exit
     -s, --start-day  SDAY   Display an interval of days starting with SDAY
     -f, --final-day  FDAY   Display until FDAY
-    -i, --input-file FILE   Load data from FILE (defaults to 'data.txt')
+    -l, --load-file FILE    Load data from FILE (defaults to 'data.txt')
     -e, --error-stats       Display extra info about error on the model
+    -i, --iter-start IDAY   Start the iterative prediction from IDAY
 
 Examples:
 
@@ -30,6 +31,8 @@ Examples:
     $0 -i updated_data.txt 50 51
 
 Notes:
+        Iterative prediction means that the result from the day i+1 is done by
+    using the data until day i.
         As with any numerical model, it finds only an approximation for future
     values based on data from past events, without taking into account changes
     in growth rates and/or the decrease in the number of cases. The results
@@ -59,14 +62,16 @@ my $start_day  = 1;
 my $final_day  = undef;
 my $error_rep  = 0;
 my $input_file = 'data.txt';
+my $iter_start = 28;
 
 GetOptions(
     "help"         => \&help,
     "version"      => \&version,
     "start-day=i"  => \$start_day,
     "final-day=i"  => \$final_day,
-    "input-file=s" => \$input_file,
+    "load-file=s"  => \$input_file,
     "error-stats"  => \$error_rep,
+    "iter-start=i" => \$iter_start,
 );
 
 my @days = defined($final_day) ? $start_day .. $final_day : @ARGV;
@@ -78,7 +83,7 @@ unless (@days > 0)
     exit(0)
 }
 my @sorted = sort { $a <=> $b } @days;
-my $estimatives = estimate_days(filename => $input_file, final => $sorted[-1]);
+my $estimatives = estimate_days(filename => $input_file, final => $sorted[-1], inc => $iter_start);
 
 print "DAY\tCASES\tESTIM" . (($error_rep) ? "\tERROR\tERROR (%)\n" : "\n");
 

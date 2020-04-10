@@ -23,12 +23,15 @@ sub load_file
     open(my $file, "< :encoding(UTF-8)", $filename)
         || die "Can't open $filename for reading: $!";
     $self->{data} = {};
+    my $last = 0;
     while (my $entry = <$file>)
     {
         next if ($entry =~ /^\#/);
         my ($x, $y) = sscanf("%f %f", $entry);
         $self->{data}->{$x} = $y;
+        $last = $x if $x > $last;
     }
+    $self->{last} = $last;
     close($file);
 }
 

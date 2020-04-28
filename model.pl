@@ -83,7 +83,10 @@ unless (@days > 0)
     exit(0)
 }
 my @sorted = sort { $a <=> $b } @days;
-my $estimatives = estimate_days(filename => $input_file, final => $sorted[-1], inc => $iter_start);
+my $estimatives = estimate_days(
+    filename => $input_file, final => $sorted[-1], inc => $iter_start,
+    foo => { 28 => 1.5, 47 => 2.5 }
+);
 
 print "DAY\tCASES\tESTIM" . (($error_rep) ? "\tERROR\tERROR (%)\n" : "\n");
 

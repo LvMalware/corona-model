@@ -53,7 +53,7 @@ sub estimate_days
             po_weight => $w_p,
             ex_weight => $w_e
         };
-        $w_p ++ if (($day >= $inc) && defined($rel_error) && (int($rel_error) <= 1)) || (($day >= 47) && defined($rel_error) && ($rel_error <= 2.5));
+        $w_p ++ if defined($rel_error) && (($day >= $inc) && (int($rel_error) <= 1)) || (($day >= 47) && ($rel_error <= 2.5));
     }
     \%estimatives
 }

@@ -1,0 +1,28 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Corona	Corona.pm	1;"	p
+Corona::Model	Corona/Model.pm	1;"	p
+Corona::Model::__exp_perform	Corona/Model.pm	57;"	s
+Corona::Model::__pow_perform	Corona/Model.pm	38;"	s
+Corona::Model::eval	Corona/Model.pm	101;"	s
+Corona::Model::exp_eval	Corona/Model.pm	94;"	s
+Corona::Model::load_file	Corona/Model.pm	18;"	s
+Corona::Model::new	Corona/Model.pm	11;"	s
+Corona::Model::perform	Corona/Model.pm	76;"	s
+Corona::Model::pow_eval	Corona/Model.pm	87;"	s
+Corona::estimate_days	Corona.pm	13;"	s
+__exp_perform	Corona/Model.pm	57;"	s
+__pow_perform	Corona/Model.pm	38;"	s
+estimate_days	Corona.pm	13;"	s
+eval	Corona/Model.pm	101;"	s
+exp_eval	Corona/Model.pm	94;"	s
+help	model.pl	12;"	s
+load_file	Corona/Model.pm	18;"	s
+new	Corona/Model.pm	11;"	s
+perform	Corona/Model.pm	76;"	s
+pow_eval	Corona/Model.pm	87;"	s
+version	model.pl	57;"	s

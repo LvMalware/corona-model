@@ -85,14 +85,14 @@ unless (@days > 0)
     exit(0)
 }
 my @sorted = sort { $a <=> $b } @days;
-my $est    = Corona::Model->new(file => $input_file);
-$est->load_file();
-$est->perform();
-for my $day (@sorted)
-{
-    printf("%s\t%s\t%s\t%s\n", $day, $est->{data}->{$day} || '-', ceil($est->exp_eval($day)), ceil($est->pow_eval($day)));
-}
-exit;
+#my $est    = Corona::Model->new(file => $input_file);
+#$est->load_file();
+#$est->perform();
+#for my $day (@sorted)
+#{
+#    printf("%s\t%s\t%s\t%s\n", $day, $est->{data}->{$day} || '-', ceil($est->exp_eval($day)), ceil($est->pow_eval($day)));
+#}
+#exit;
 my $estimatives = estimate_days(filename => $input_file, final => $sorted[-1], inc => $iter_start);
 
 print "DAY\tCASES\tESTIM" . (($error_rep) ? "\tERROR\tERROR (%)\n" : "\n");

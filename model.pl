@@ -64,7 +64,7 @@ my $start_day  = 1;
 my $final_day  = undef;
 my $error_rep  = 0;
 my $input_file = 'piaui.txt';
-my $iter_start = 19;
+my $iter_start = 44;
 
 GetOptions(
     "help"         => \&help,

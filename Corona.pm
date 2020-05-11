@@ -15,9 +15,10 @@ sub estimate_days
     my %args = @_;
     my $filename = $args{filename};
     my $max_day  = $args{final} || die "No final day specified. Try passing 'final => day'";
-    my $inc      = $args{inc}   || 19;
-    my $w_p      = 0;#$args{wp}    || 1;
-    my $w_e      = $args{we}    || 1;
+    my $foo      = $args{foo}   || { };
+    my $inc      = $args{inc}   || 28;
+    my $w_p      = defined($args{wp}) ? $args{wp} : 1;
+    my $w_e      = defined($args{we}) ? $args{we} : 1;
     die "Invalid file: '$filename'" unless (-f $filename);
     my $predictor = Corona::Model->new(file => $filename);
     my %estimatives;
@@ -27,9 +28,10 @@ sub estimate_days
     {
         die "Can't perform iterative prediction with IDAY ($inc) > LIMIT ($limit)"
     }
+    my $bar = -1;
     for my $day (1 .. $max_day)
     {
-        if (($day < $inc))
+        if ($day < $inc)
         {
             $predictor->perform($inc - 1);
         }
@@ -53,7 +55,8 @@ sub estimate_days
             po_weight => $w_p,
             ex_weight => $w_e
         };
-        #$w_e ++ if (($day >= $inc) && defined($rel_error) && (int($rel_error) <= 5));
+        $bar = $foo->{$day} if defined($foo->{$day});
+        $w_p ++ if defined($rel_error) && $rel_error <= $bar;
     }
     \%estimatives
 }

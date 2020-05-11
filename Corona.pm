@@ -15,10 +15,10 @@ sub estimate_days
     my %args = @_;
     my $filename = $args{filename};
     my $max_day  = $args{final} || die "No final day specified. Try passing 'final => day'";
-    my $foo      = $args{foo}   || { 28 => 1.5, 47 => 2.5 };
+    my $foo      = $args{foo}   || { };
     my $inc      = $args{inc}   || 28;
-    my $w_p      = $args{wp}    || 1;
-    my $w_e      = $args{we}    || 1;
+    my $w_p      = defined($args{wp}) ? $args{wp} : 1;
+    my $w_e      = defined($args{we}) ? $args{we} : 1;
     die "Invalid file: '$filename'" unless (-f $filename);
     my $predictor = Corona::Model->new(file => $filename);
     my %estimatives;

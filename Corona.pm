@@ -58,6 +58,8 @@ sub estimate_days
         $bar = $foo->{$day} if defined($foo->{$day});
         $w_p ++ if defined($rel_error) && $rel_error <= $bar;
     }
+    #print "f(x)=" . $predictor->{pow_b} . "X^" . $predictor->{pow_a} . "\n";
+    #print "f(x)=" . $predictor->{exp_b} . "e^X" . $predictor->{exp_a} . "\n";
     \%estimatives
 }
 

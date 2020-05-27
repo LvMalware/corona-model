@@ -88,7 +88,7 @@ my @sorted = sort { $a <=> $b } @days;
 
 my $estimatives = estimate_days(
     filename => $input_file, final => $sorted[-1], inc => $iter_start,
-    wp => 0, foo => { 44 => 1.0}, 
+    wp => 0, foo => { 44 => 1.0, 64 => 0.3}, 
 );
 
 print "DAY\tCASES\tESTIM" . (($error_rep) ? "\tERROR\tERROR (%)\n" : "\n");

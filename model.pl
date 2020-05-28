@@ -28,7 +28,7 @@ Options:
 Examples:
 
     $0 -s 34 -f 38 -e
-    $0 -i updated_data.txt 50 51
+    $0 -l updated_data.txt 50 51
 
 Notes:
         Iterative prediction means that the result from the day i+1 is done by

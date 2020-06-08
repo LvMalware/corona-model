@@ -10,11 +10,11 @@ my $request = HTTP::Tiny->new()->get('https://www.coronavirus.com.br/wp-content/
 if ($request->{success})
 {
     my $data = JSON::from_json($request->{content});
-    open my $out, ">", "brasil.txt";
+    #open my $out, ">", "brasil.txt";
     my $days = $data->{countries}->{Brazil}->{dates};
     for my $day (0 .. @$days - 1)
     {
-        print $out ($day + 1) . "        " . $days->[$day]->{'confirmed'} . "\n";
+        print(($day + 1) . "        " . $days->[$day]->{'confirmed'} . "\n");
     }
-    close $out;
+    #close $out;
 }

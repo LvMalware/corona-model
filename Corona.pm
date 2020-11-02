@@ -14,11 +14,10 @@ sub estimate_days
 {
     my %args = @_;
     my $filename = $args{filename};
-    my $max_day  = $args{final} || die "No final day specified. Try passing 'final => day'";
-    my $foo      = $args{foo}   || { 28 => 1.5, 47 => 2.5 };
-    my $inc      = $args{inc}   || 28;
-    my $w_p      = $args{wp}    || 1;
-    my $w_e      = $args{we}    || 1;
+    my $max_day  = $args{final}  || die "No final day specified. Try passing 'final => day'";
+    my $adj_day  = $args{errday} || 124;
+    my $err      = $args{error}  || 3;
+    my $inc      = $args{inc}    || 28;
     die "Invalid file: '$filename'" unless (-f $filename);
     my $predictor = Corona::Model->new(file => $filename);
     my %estimatives;
@@ -28,7 +27,9 @@ sub estimate_days
     {
         die "Can't perform iterative prediction with IDAY ($inc) > LIMIT ($limit)"
     }
-    my $bar = -1;
+    
+    my $adj_err = 0;
+
     for my $day (1 .. $max_day)
     {
         if ($day < $inc)
@@ -44,19 +45,26 @@ sub estimate_days
             $predictor->perform($limit);
         }
         my $true_value = $predictor->{data}->{$day} || undef;
-        my $estimated  = ceil($predictor->eval($day, $w_e, $w_p));
+        my $estimated  = ceil($predictor->eval($day));
+        $estimated    -= ceil($estimated * $adj_err / 100);
         my $abs_error  = defined($true_value) ? abs($true_value - $estimated) : undef;
         my $rel_error  = defined($abs_error) ? 100 * $abs_error / $true_value : undef;
+
         $estimatives{$day} = {
             real      => $true_value,
             estimated => $estimated,
             abs_error => $abs_error,
             rel_error => $rel_error,
-            po_weight => $w_p,
-            ex_weight => $w_e
+            adj_error => $adj_err,
         };
-        $bar = $foo->{$day} if defined($foo->{$day});
-        $w_p ++ if defined($rel_error) && $rel_error <= $bar;
+
+        if ($day > $adj_day)
+        {
+            if (defined($true_value) && $true_value < $estimated)
+            {
+                $adj_err += $err / 2 if ($rel_error > $err);
+            }
+        }
     }
     \%estimatives
 }

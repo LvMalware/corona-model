@@ -6,6 +6,7 @@ use warnings;
 use Getopt::Long;
 use Corona;
 use Data::Dump;
+use POSIX;
 
 sub help
 {
@@ -84,8 +85,7 @@ unless (@days > 0)
 }
 my @sorted = sort { $a <=> $b } @days;
 my $estimatives = estimate_days(
-    filename => $input_file, final => $sorted[-1], inc => $iter_start,
-    foo => { 28 => 1.5, 47 => 2.5, 125 => 20 }
+    filename => $input_file, final => $sorted[-1], inc => $iter_start
 );
 
 print "DAY\tCASES\tESTIM" . (($error_rep) ? "\tERROR\tERROR (%)\n" : "\n");

@@ -54,32 +54,10 @@ sub __pow_perform
     ($a, $b)
 }
 
-sub __exp_perform
-{
-    my ($self, $max) = @_;
-    my ($sum_x, $sum_y, $sum_x2, $sum_xy) = (0, 0, 0, 0);
-    $max = scalar %{$self->{data}} unless defined($max);
-
-    for my $x (1 .. $max)
-    {
-        $sum_x  += $x;
-        $sum_y  += log($self->{data}->{$x});
-        $sum_x2 += $x ** 2;
-        $sum_xy += $x * log($self->{data}->{$x});
-    }
-
-    my $a = ($max * $sum_xy - $sum_x * $sum_y) / ($max * $sum_x2 - $sum_x * $sum_x);
-    my $b = ($sum_x * $sum_xy - $sum_y * $sum_x2) / ($sum_x * $sum_x  - $max * $sum_x2);
-    ($a, $b)
-}
-
 sub perform
 {
     my ($self, $max)    = @_;
-    my ($exp_a, $exp_b) = $self->__exp_perform($max);
     my ($pow_a, $pow_b) = $self->__pow_perform($max);
-    $self->{exp_a} = $exp_a;
-    $self->{exp_b} = $exp_b;
     $self->{pow_a} = $pow_a;
     $self->{pow_b} = $pow_b;
 }
@@ -91,21 +69,10 @@ sub pow_eval
     exp($self->{pow_b}) * ($x ** $self->{pow_a})
 }
 
-sub exp_eval
-{
-    my ($self, $x) = @_;
-    die "Can't eval without performing regression first." unless $self->{exp_a};
-    exp($self->{exp_b}) * exp($x * $self->{exp_a})
-}
-
 sub eval
 {
-    my ($self, $x, $w_e, $w_p) = @_;
-    $w_e = 1 unless defined($w_e);
-    $w_p = 1 unless defined($w_p);
-    my $exp = $self->exp_eval($x);
-    my $pow = $self->pow_eval($x);
-    ($w_e * $exp + $w_p * $pow) / ($w_e + $w_p);
+    my ($self, $x) = @_;
+    $self->pow_eval($x);
 }
 
 1;
